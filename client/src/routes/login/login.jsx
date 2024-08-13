@@ -61,7 +61,7 @@ function Login() {
         </form>
       </div>
       <div className="imgContainer">
-        <img src="/bg.png" alt="" />
+        <img src="/bg (2).png" alt="" />
       </div>
     </div>
   );
