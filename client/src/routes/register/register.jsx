@@ -1,7 +1,8 @@
+
 import "./register.scss";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import { useState } from "react";
+import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import apiRequest from "../../lib/apiRequest";
 
 function Register() {
@@ -12,7 +13,7 @@ function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("")
+    setError("");
     setIsLoading(true);
     const formData = new FormData(e.target);
 
@@ -34,23 +35,44 @@ function Register() {
       setIsLoading(false);
     }
   };
+
+  // Google Login Success Handler
+  const handleGoogleLoginSuccess = async (response) => {
+    try {
+      const token = response.credential;
+      // Send the token to your server to validate and create/register the user
+      await apiRequest.post("/auth/google-login", { token });
+      navigate("/");
+    } catch (err) {
+      setError("Google login failed.");
+    }
+  };
+
   return (
-    <div className="registerPage">
-      <div className="formContainer">
-        <form onSubmit={handleSubmit}>
-          <h1>Create an Account</h1>
-          <input name="username" type="text" placeholder="Username" />
-          <input name="email" type="text" placeholder="Email" />
-          <input name="password" type="password" placeholder="Password" />
-          <button disabled={isLoading}>Register</button>
-          {error && <span>{error}</span>}
-          <Link to="/login">Do you have an account?</Link>
-        </form>
+    <GoogleOAuthProvider clientId="YOUR_GOOGLE_CLIENT_ID">
+      <div className="registerPage">
+        <div className="formContainer">
+          <form onSubmit={handleSubmit}>
+            <h1>Create an Account</h1>
+            <input name="username" type="text" placeholder="Username" />
+            <input name="email" type="text" placeholder="Email" />
+            <input name="password" type="password" placeholder="Password" />
+            <button disabled={isLoading}>Register</button>
+            {error && <span>{error}</span>}
+            <Link to="/login">Do you have an account?</Link>
+          </form>
+          <div className="or">OR</div>
+          {/* Google Login Button */}
+          <GoogleLogin
+            onSuccess={handleGoogleLoginSuccess}
+            onError={() => setError("Google login failed.")}
+          />
+        </div>
+        <div className="imgContainer">
+          <img src="/bg (2).png" alt="" />
+        </div>
       </div>
-      <div className="imgContainer">
-        <img src="/bg (2).png" alt="" />
-      </div>
-    </div>
+    </GoogleOAuthProvider>
   );
 }
 
