@@ -1,11 +1,24 @@
 import axios from "axios";
 
 const apiRequest = axios.create({
-  baseURL: "http://localhost:8800/api"||"https://real-estate-pfuh.onrender.com",
+  baseURL: "https://real-estate-pfuh.onrender.com",
   withCredentials: true,
 });
 
 export default apiRequest;
+
+
+
+
+
+// import axios from "axios";
+
+// const apiRequest = axios.create({
+//   baseURL: "http://localhost:8800/api"||"https://real-estate-pfuh.onrender.com",
+//   withCredentials: true,
+// });
+
+// export default apiRequest;
 // import axios from "axios";
 
 // // Dynamically set the baseURL from environment variables, with a fallback to localhost
