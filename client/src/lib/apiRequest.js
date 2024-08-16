@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiRequest = axios.create({
-  baseURL: "http://localhost:8800/api"||"https://real-estate-f5ad.onrender.com",
+  baseURL: "http://localhost:8800/api"||"https://real-estate-pfuh.onrender.com",
   withCredentials: true,
 });
 
